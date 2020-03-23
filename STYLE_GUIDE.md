@@ -33,7 +33,6 @@ scroll down and understand the functionality of it just as well as you do. A loo
  * `TODO` should not be used. If important enough should be recorded as an issue.
  * `BUG` / `FIXME` should be used sparingly to guide future developers on some of the vulnerabilities of the code.
  * `XXX` can be used in work-in-progress (prefixed with "WIP:" on github) branches but they must be removed before approving a PR.
- * Libraries *should* panic on developer usage error.
  * Applications (e.g. clis/servers) *should* panic on unexpected unrecoverable errors and print a stack trace.
 
 ## Comments
@@ -73,12 +72,13 @@ Sometimes it's necessary to rename libraries to avoid naming collisions or ambig
  * Use [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)
  * Separate imports into blocks - one for the standard lib, one for external libs and one for tendermint libs.
  * Here are some common library labels for consistency:
-   - dbm "github.com/tendermint/tmlibs/db"
-   - cmn "github.com/tendermint/tmlibs/common"
+   - dbm "github.com/tendermint/tm-db"
    - tmcmd "github.com/tendermint/tendermint/cmd/tendermint/commands"
    - tmcfg "github.com/tendermint/tendermint/config/tendermint"
    - tmtypes "github.com/tendermint/tendermint/types"
  * Never use anonymous imports (the `.`), for example, `tmlibs/common` or anything else.
+ * When importing a pkg from the `tendermint/libs` directory, prefix the pkg alias with tm.
+     - tmbits "github.com/tendermint/tendermint/libs/bits"
  * tip: Use the `_` library import to import a library for initialization effects (side effects)
 
 ## Dependencies
@@ -101,6 +101,7 @@ Sometimes it's necessary to rename libraries to avoid naming collisions or ambig
  * Ensure that errors are concise, clear and traceable.
  * Use stdlib errors package.
  * For wrapping errors, use `fmt.Errorf()` with `%w`.
+ * Use panic sparingly only to expose internal problems.
 
 ## Config
 
