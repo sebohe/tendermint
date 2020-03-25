@@ -190,7 +190,7 @@ easy to reference the pull request where a change was introduced.
 
 - ensure pull branch is based on a recent `master`
 - run `make test` to ensure that all tests pass
-- squash merge pull request
+- [squash](https://stackoverflow.com/questions/5189560/squash-my-last-x-commits-together-using-git) merge pull request
 - the `unstable` branch may be used to aggregate pull merges before fixing tests
 
 ### Release Procedure

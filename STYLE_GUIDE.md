@@ -5,9 +5,9 @@ the code generally looks quite similar. This doesn't mean there is only one "rig
 standard is better than your style.  But if we agree to a number of stylistic practices, it makes it much easier to read
 and modify new code. Please feel free to make suggestions if there's something you would like to add or modify.
 
-Please, before going through the rest of the document, have a read over the [syntactical style](https://github.com/uber-go/guide/blob/master/style.md)
-
-If you wish to gain some further understanding, we recommend having a read on how to code [effective go](https://golang.org/doc/effective_go.html)
+We expect all contributors to be familiar with [Effective Go](https://golang.org/doc/effective_go.html)
+(and it's recommended reading for all Go programmers anyways.) Additionally, we generally agree with the suggestions
+ in [Uber's style guide](https://github.com/uber-go/guide/blob/master/style.md) and use that as a starting point.
 
 
 ## Code Structure
@@ -18,7 +18,7 @@ scroll down and understand the functionality of it just as well as you do. A loo
 * Constants and global variables
 * Main Struct
 * Options (only if they are seen as critical to the struct else they should be placed in another file)
-* Initialisation / Start and stop of the service
+* Initialization / Start and stop of the service
 * Msgs/Events
 * Public Functions (In order of most important)
 * Private/helper functions
@@ -38,12 +38,12 @@ scroll down and understand the functionality of it just as well as you do. A loo
 ## Comments
 
  * Use a space after comment deliminter (ex. `// your comment`).
- * Many comments are not sentences, these should begin with a lower case letter and end without a period.
- * The first letter of sentences in comments are capitalized and ends with a period.
+ * Many comments are not sentences. These should begin with a lower case letter and end without a period.
+ * Conversely, sentences in comments should be sentenced-cased end with a period.
 
 ## Linters
 
-These must be applied to all (go) repos.
+These must be applied to all (Go) repos.
 
  * [shellcheck](https://github.com/koalaman/shellcheck)
  * [golangci (covers all important linters)](https://github.com/golangci/golangci-lint)
@@ -54,7 +54,8 @@ These must be applied to all (go) repos.
  * Reserve "Save" and "Load" for long-running persistence operations. When parsing bytes, use "Encode" or "Decode".
  * Maintain consistency across the codebase.
  * Functions that return functions should have the suffix `Fn`
- * A struct generally shouldn’t have a field named after itself, aka. this shouldn't occur:
+ * Names should not [stutter](https://blog.golang.org/package-names). For example, a struct generally shouldn’t have
+  a field named after itself; e.g., this shouldn't occur:
 ``` golang
 type middleware struct {
 	middleware Middleware
@@ -70,7 +71,7 @@ type middleware struct {
 Sometimes it's necessary to rename libraries to avoid naming collisions or ambiguity.
 
  * Use [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports)
- * Separate imports into blocks - one for the standard lib, one for external libs and one for tendermint libs.
+ * Separate imports into blocks - one for the standard lib, one for external libs and one for Tendermint libs.
  * Here are some common library labels for consistency:
    - dbm "github.com/tendermint/tm-db"
    - tmcmd "github.com/tendermint/tendermint/cmd/tendermint/commands"
@@ -101,7 +102,8 @@ Sometimes it's necessary to rename libraries to avoid naming collisions or ambig
  * Ensure that errors are concise, clear and traceable.
  * Use stdlib errors package.
  * For wrapping errors, use `fmt.Errorf()` with `%w`.
- * Use panic sparingly only to expose internal problems.
+ * Panic is appropriate when an internal invariant of a system is broken, while all other cases (in particular,
+  incorrect or invalid usage) should return errors.
 
 ## Config
 
@@ -110,22 +112,22 @@ Sometimes it's necessary to rename libraries to avoid naming collisions or ambig
 
 ## CLI
 
- * When implementing a CLI use [Cobra](https://github.com/spf13/cobra) and [Viper](https://github.com/spf13/viper). urfave/cli can be replace with cobra in those repos where applicable.
+ * When implementing a CLI use [Cobra](https://github.com/spf13/cobra) and [Viper](https://github.com/spf13/viper).
  * Helper messages for commands and flags must be all lowercase.
- * Instead of using pointer flags (eg. `FlagSet().StringVar`) use viper to retrieve flag values (eg. `viper.GetString`)
+ * Instead of using pointer flags (eg. `FlagSet().StringVar`) use Viper to retrieve flag values (eg. `viper.GetString`)
    - The flag key used when setting and getting the flag should always be stored in a
    variable taking the form `FlagXxx` or `flagXxx`.
-   - Flag short variable descriptions should always start with a lower case charater as to remain consistent with
+   - Flag short variable descriptions should always start with a lower case character as to remain consistent with
    the description provided in the default `--help` flag.
 
 ## Version
 
- * Every repo should have a version/version.go file that mimicks the tendermint core repo
+ * Every repo should have a version/version.go file that mimics the Tendermint Core repo
  * We read the value of the constant version in our build scripts and hence it has to be a string
 
-## Non-Golang Code
+## Non-Go Code
 
- * All non-go code (`*.proto`, `Makefile`, `*.sh`), where there is no common
+ * All non-Go code (`*.proto`, `Makefile`, `*.sh`), where there is no common
    agreement on style, should be formatted according to
    [EditorConfig](http://editorconfig.org/) config:
 
