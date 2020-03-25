@@ -51,9 +51,9 @@ A more persistent solution (not detailed on the diagram) is to have multiple dir
 
 The validator will only talk to the sentry that are provided, the sentry nodes will communicate to the validator via a secret connection and the rest of the network through a normal connection. The sentry nodes do have the option of communicating with each other as well.
 
-When initializing the nodes there are five parameters in the `config.toml` that will need to altered.
+When initializing nodes there are five parameters in the `config.toml` that may need to be altered.
 
-- `pex:` boolean. It turns the peer exchange reactor on or off for a node. When `pex=false`, only the `persistent_peers` list is available for connection.
+- `pex:` boolean. This turns the peer exchange reactor on or off for a node. When `pex=false`, only the `persistent_peers` list is available for connection.
 - `persistent_peers:` a comma separated list of `nodeID@ip:port` values that define a list of peers that are expected to be online at all times. This is necessary at first startup because by setting `pex=false` the node will not be able to join the network.
 - `unconditional_peer_ids:` comma separated list of nodeID's. These nodes will be connected to no matter the limits of inbound and outbound peers. This is useful for when sentry nodes have full address books.
 - `private_peer_ids:` comma separated list of nodeID's. These nodes will not be gossiped to the network. This is only necessary if `pex=false`.
@@ -83,7 +83,7 @@ The validator node should have `pex=false` so it does not gossip to the entire n
 
 The sentry nodes should be able to talk to the entire network hence why `pex=true`. The persistent peers of a sentry node will be the validator, and optionally other sentry nodes. The sentry nodes should make sure that they do not gossip the validator's ip, to do this you must put the validators nodeID as a private peer. The unconditional peer IDs will be the validator ID and optionally other sentry nodes.
 
-> Note: Do not forget to secure your server's firewalls when setting them up.
+> Note: Do not forget to secure your node's firewalls when setting them up.
 
 ## Committing a Block
 
